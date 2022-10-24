@@ -57,4 +57,32 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
+  def search_tmdb
+    api_key = "d7c385ccb2f4441630477b180f3861e3"
+    url = URI("https://api.themoviedb.org/3/search/movie?api_key=#{api_key}&query=#{params[:search_terms]}&page=1")
+    response = Net::HTTP.get_response(url)
+    if response.is_a?(Net::HTTPSuccess)
+      data = JSON.parse(response.body)
+      # puts "THIS ---------------------- #{data["results"]}"
+      if data["results"] == []
+        flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
+        redirect_to movies_path   
+      else
+        title_name = data["results"][0]["title"]
+        release_date = data["results"][0]["release_date"]
+        adult = data["results"][0]["adult"]
+        overview = data["results"][0]["overview"]
+        @movies = {
+          "title" => "#{title_name}",
+          "release_date" => "#{release_date}",
+          "adult" => "#{adult}",
+          "overview" => "#{overview}"
+        }
+        # puts "THIS -------------------- #{@movies}"
+        redirect_to new_movie_path(@movies)        
+      end
+      
+    end    
+  end
+
 end

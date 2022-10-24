@@ -1,14 +1,29 @@
-%h2 Create New Movie
+%h2 Add New Movie
 
 = form_tag movies_path do
 
-  = label :movie, :title, 'Title'
-  = text_field :movie, 'title'
 
+  = label :movie, :title, 'Title'
+  = text_field :movie, 'title', :value => params[:title]
+  %br
   = label :movie, :rating, 'Rating'
-  = select :movie, :rating, ['G','PG','PG-13','R','NC-17']
+  - if params[:adult] == "true"
+    = select :movie, :rating, ['R','PG','PG-13','G','NC-17']
+  - else
+    = select :movie, :rating, ['G','PG','PG-13','R','NC-17']
 
   = label :movie, :release_date, 'Released On'
-  = date_select :movie, :release_date
-
+  - month = Hash["01" => "Jan", "02" => "Feb", "03" => "Mar", "04" => "Apr", "05" => "May" , "06" => "Jun", "07" => "Jul", "08" => "Aug" , "09" => "Sep" , "10" => "Oct", "11" => "Nov", "12" => "Dec"]
+  - unless params[:release_date].nil?
+    - date = params[:release_date].split("-")
+    = date_select :movie, :release_date, default: { day: "#{date[2].to_i}", month: "#{month[date[1]]}", year: "#{date[0]}" }
+  - else
+    = date_select :movie, :release_date
+  %br
+  = label :movie, :description , "Description"
+  = text_area :movie, "description" ,size: "30x5" ,:value => params[:overview] 
   = submit_tag 'Save Changes', :class => 'btn btn-primary'
+
+-# %h2= params[:title]
+-# %h2= params[:release_date]
+-# %h2= params[:adult]
