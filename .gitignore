@@ -3,3 +3,7 @@ rottenpotatoes/db/*.sqlite3
 rottenpotatoes/log/
 rottenpotatoes/tmp/
 rottenpotatoes/vendor/bundle
+
+rottenpotatoes/docker-compose.yaml
+rottenpotatoes/Dockerfile
+rottenpotatoes/Dockerfile-web
