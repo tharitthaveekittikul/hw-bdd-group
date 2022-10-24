@@ -20,8 +20,21 @@ Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.body is the entire content of the page as a string.
   # puts page.body
-  
-  fail "Unimplemented"
+  index_e1 = 0,index_e2 = 0
+  page.all("td").each_with_index do |td,index|
+    # if index % 4 == 0
+      if(td.text == e1)
+        index_e1 = index
+      end
+      if(td.text == e2)
+        index_e2 = index
+      end
+    # end
+  end
+  if (index_e1 > index_e2)
+    fail 
+  end
+  # fail "Unimplemented"
 end
 
 # Make it easier to express checking or unchecking several boxes at once
