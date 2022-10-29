@@ -1,4 +1,11 @@
 -#  This file is app/views/movies/index.html.haml
+
+-if current_user  
+  =link_to "Profile", pages_home_path
+  =link_to "Sign out" , destroy_user_session_path, data: {turbo: "false"}, method: :delete
+- else
+  =link_to "Sign In" , pages_home_path
+  
 %h2 All Movies
 
 = form_tag movies_path, :method => :get, :id => 'ratings_form' do
