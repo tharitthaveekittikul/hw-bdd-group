@@ -15,9 +15,10 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem 'dotenv-rails'
+gem 'reek'
 
 group :development, :test do
-  #gem "sqlite3", "~> 1.3.6"
+  gem "sqlite3", "~> 1.3.6"
   gem 'byebug'
   gem 'database_cleaner'
   gem 'capybara'
